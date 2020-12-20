@@ -1,9 +1,10 @@
 FROM python:3.9-alpine
+RUN apk --update-cache add libressl
 
 WORKDIR /app
 
 COPY ./requirements.txt requirements.txt
-RUN apk --update-cache add --virtual build-dependencies build-base libressl-dev libffi-dev \
+RUN apk add --virtual build-dependencies build-base libressl-dev libffi-dev \
   && pip install -r requirements.txt \
   && apk del build-dependencies
 
