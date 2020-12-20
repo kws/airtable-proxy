@@ -23,3 +23,8 @@ The proxy should then be available on http://localhost:5000/ .
 
 To build a version yourself, simply use the included [Dockerfile](./Dockerfile).
 
+## Deploying to Heroku
+
+You can also deploy for free to Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
