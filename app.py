@@ -73,10 +73,10 @@ def create_app():
             for page in airtable.get_iter(**kwargs):
                 for record in page:
                     if first_record:
-                        yield '['
+                        yield "["
+                        first_record = False
                     else:
                         yield ","
-                        first_record = False
                     yield json.dumps(record)
             yield ']'
         return Response(generate(), mimetype="application/json")

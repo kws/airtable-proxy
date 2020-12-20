@@ -109,7 +109,7 @@
                   setDownloadUrl('');
               });
           } else {
-              var apiUrl = new URL(`${window.location.protocol}//${window.location.host}/airtable/genkey`);
+              var apiUrl = new URL(`${window.location.protocol}//${window.location.host}/airtable/download`);
               apiUrl.searchParams.append("api_key", params.api_key);
               apiUrl.searchParams.append("base_id", params.base_id);
               apiUrl.searchParams.append("table_name", params.table_name);
