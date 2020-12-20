@@ -10,77 +10,99 @@
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <style>
+        .nav-wrapper {
+            padding: 0 2em;
+        }
+        .love {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <script
-        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
-        crossorigin="anonymous"></script>
+            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+            crossorigin="anonymous"></script>
     </body>
 
-        <script>
-          function fallbackCopyTextToClipboard(text) {
-            var textArea = document.createElement("textarea");
-            textArea.value = text;
+    <script>
+      function fallbackCopyTextToClipboard(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
 
-            // Avoid scrolling to bottom
-            textArea.style.top = "0";
-            textArea.style.left = "0";
-            textArea.style.position = "fixed";
+        // Avoid scrolling to bottom
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
 
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
 
-            try {
-                var successful = document.execCommand('copy');
-                var msg = successful ? 'successful' : 'unsuccessful';
-                console.log('Fallback: Copying text command was ' + msg);
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-            }
-
-            document.body.removeChild(textArea);
-        }
-        function copyTextToClipboard(text) {
-            if (!navigator.clipboard) {
-                fallbackCopyTextToClipboard(text);
-                return;
-            }
-            navigator.clipboard.writeText(text).then(function() {
-                console.log('Async: Copying to clipboard was successful!');
-            }, function(err) {
-                console.error('Async: Could not copy text: ', err);
-            });
+        try {
+          var successful = document.execCommand('copy');
+          var msg = successful ? 'successful' : 'unsuccessful';
+          console.log('Fallback: Copying text command was ' + msg);
+        } catch (err) {
+          console.error('Fallback: Oops, unable to copy', err);
         }
 
-        $(function() {
-            function updateURL() {
-                var apiUrl = new URL(`${window.location.protocol}//${window.location.host}/airtable/download`);
-                apiUrl.searchParams.append("api_key", $('#api_key').val());
-                apiUrl.searchParams.append("base_id", $('#base_id').val());
-                apiUrl.searchParams.append("table_name", $('#table_name').val());
-                $('#url').val(apiUrl);
-                M.updateTextFields();
-            }
+        document.body.removeChild(textArea);
+      }
 
-            function copyUrl() {
-                var url = $('#url').val();
-                copyTextToClipboard(url)
-                M.toast({html: 'URL copied to clipboard', classes: 'rounded'});
-            }
+      function copyTextToClipboard(text) {
+        if (!navigator.clipboard) {
+          fallbackCopyTextToClipboard(text);
+          return;
+        }
+        navigator.clipboard.writeText(text).then(function () {
+          console.log('Async: Copying to clipboard was successful!');
+        }, function (err) {
+          console.error('Async: Could not copy text: ', err);
+        });
+      }
 
-            $('input').on('change', updateURL);
-            $('input').on('keyup', updateURL);
-            $('#url_copy').on('click', copyUrl);
-        })
+      $(function () {
+        function updateURL() {
+          var apiUrl = new URL(`${window.location.protocol}//${window.location.host}/airtable/download`);
+          apiUrl.searchParams.append("api_key", $('#api_key').val());
+          apiUrl.searchParams.append("base_id", $('#base_id').val());
+          apiUrl.searchParams.append("table_name", $('#table_name').val());
+          $('#url').val(apiUrl);
+          M.updateTextFields();
+        }
 
+        function copyUrl() {
+          var url = $('#url').val();
+          copyTextToClipboard(url)
+          M.toast({html: 'URL copied to clipboard', classes: 'rounded'});
+        }
+
+        $('input').on('change', updateURL);
+        $('input').on('keyup', updateURL);
+        $('#url_copy').on('click', copyUrl);
+      })
     </script>
 </head>
 <body>
 <div class="container">
-    <h1>Airtable Proxy</h1>
+    <header>
+  <nav>
+    <div class="nav-wrapper grey darken-3">
+      <a href="#" class="brand-logo">Airtable Proxy</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+            <a href="https://github.com/kws/airtable-proxy">View on GitHub<i class="material-icons left">github</i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+    </header>
     <p class="flow-text">
         The Airtable Proxy is a simple Flask application that will make multiple paginated Airtable requests
         on your behalf and return a single non-paginated result.
@@ -94,7 +116,9 @@
         recommended for personal or sensitive data, unless you trust the proxy host.
     <p>
     <p class="flow-text">
-        You can simply launch this service yourself, and templates for Docker and Heroku are included.
+        You can simply launch this service yourself, and templates for
+        <a href="https://github.com/kws/airtable-proxy#deploying-docker-image">Docker</a> and
+        <a href="https://github.com/kws/airtable-proxy#deploying-docker-image">Heroku</a> are included.
     </p>
     <p class="flow-text">
         To get started, you will need your Airtable base ID, the table name, and your personal API key. Visit
@@ -138,8 +162,13 @@
 
 </div>
 
+<footer class="love">
+    <p class="flow-text">Made with ❤️ by <a href="https://github.com/kws">Kaj</a>.</p>
+</footer>
 <!-- Compiled and minified JavaScript -->
 <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
-    crossorigin="anonymous"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
