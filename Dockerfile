@@ -3,7 +3,9 @@ FROM python:3.9-alpine
 WORKDIR /app
 
 COPY ./requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN apk --update-cache add --virtual build-dependencies build-base libressl-dev libffi-dev \
+  && pip install -r requirements.txt \
+  && apk del build-dependencies
 
 COPY static static
 COPY app.py app.py
