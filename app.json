@@ -1,0 +1,6 @@
+{
+  "name": "Airtable Proxy",
+  "description": "A proxy to simplify making multi-page airtable API requests",
+  "repository": "https://github.com/kws/airtable-proxy",
+  "keywords": ["airtable", "python", "proxy"]
+}
