@@ -6,7 +6,6 @@ COPY ./requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY static static
-COPY templates templates
 COPY app.py app.py
 
 ENV HOST=0.0.0.0 PORT=5000
