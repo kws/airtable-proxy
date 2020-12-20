@@ -1,8 +1,7 @@
+import json
 import os
-import jsonstreams
-import tempfile
 from airtable import Airtable
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, Response
 
 
 def _opt_params_(*args):
@@ -31,16 +30,17 @@ def create_app():
 
         kwargs = _opt_params_("view", "fields", "sort", "formula")
 
-        with tempfile.NamedTemporaryFile(mode="wt", delete=False) as FILE:
-            try:
-                with jsonstreams.Stream(jsonstreams.Type.object, fd=FILE) as STREAM:
-                    with STREAM.subarray('records') as records:
-                        for page in airtable.get_iter(**kwargs):
-                            for record in page:
-                                records.write(record)
-
-                return send_file(FILE.name, attachment_filename=f"{table_name}.json")
-            finally:
-                os.unlink(FILE.name)
+        def generate():
+            print_sep = False
+            yield '['
+            for page in airtable.get_iter(**kwargs):
+                for record in page:
+                    if print_sep:
+                        yield ","
+                    else:
+                        print_sep = True
+                    yield json.dumps(record)
+            yield ']'
+        return Response(generate(), mimetype="application/json")
 
     return app

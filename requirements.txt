@@ -2,6 +2,5 @@ airtable-python-wrapper~=0.15.1
 flask~=1.1.2
 itsdangerous~=1.1.0
 jinja2~=2.11.2
-jsonstreams~=0.5.0
 waitress~=1.4.4
 werkzeug~=1.0.1
