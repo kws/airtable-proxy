@@ -11,3 +11,15 @@ recommended for personal or sensitive data, unless you trust the proxy host.
 
 You can simply launch this service yourself, and templates for Docker and Heroku are included.
 
+## Deploying Docker Image
+
+To run this code locally, you can pull and run the latest image with
+
+```shell
+docker run --rm -t -p5000:5000 kajws/airtable-proxy
+```
+
+The proxy should then be available on http://localhost:5000/ .
+
+To build a version yourself, simply use the included [Dockerfile](./Dockerfile).
+
