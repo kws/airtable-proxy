@@ -5,7 +5,7 @@ on:
     branches: main
 
 jobs:
-  build:
+  BuildDockerImages:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -15,9 +15,13 @@ jobs:
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
           version: latest
+      - name: login to docker hub
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
       - name: build the image
         run: |
-          docker buildx build \
+          docker buildx build --push \
             --tag kajws/airtable-proxy:latest \
             --platform linux/amd64,linux/arm/v7,linux/arm64 .
-
